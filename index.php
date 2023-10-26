@@ -52,10 +52,6 @@
             
             <?php 
 
-            class user {
-
-            }
-
             function check() {
                 notlogged();
             }
