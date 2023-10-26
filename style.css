@@ -1,0 +1,194 @@
+:root {
+    --kubaVP1: #092331; 
+    --kubaVP2: #12505f; 
+    --kubaVP3: #209a95; 
+    font-family: 'Roboto', sans-serif;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    transition: 0.2s ease-in-out;
+}
+
+
+body {
+    background-color: var(--kubaVP1);
+    color: var(--kubaVP3)
+}
+
+
+#content {
+    padding-top: 105px;
+}
+
+#nav {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 15px;
+    background-color: var(--kubaVP2);
+}
+
+#navpack {
+    width: 100%;
+    position: fixed;
+    z-index: 9;
+    top: 0;
+}
+
+a {
+    text-decoration: none;
+    color: var(--kubaVP3);
+}
+
+a:hover {
+    color: var(--kubaVP3L15);
+}
+
+#logo-text {
+    text-align: left;
+    float: left;
+    position: relative;
+  }
+
+  #logo-text::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 40%;
+    width: 130%;
+    height: 3px; /* Rozmiar paska */
+    background-color: var(--kubaVP3L30); /* Kolor paska */
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  #logo-text:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+#wyszukiwarka {
+    float: right;
+    margin-right: 25px;
+    margin-top: 10px;
+
+}
+
+#szukaj {
+    width: 100%;
+    background-color: var(--kubaVP1);
+    color: var(--kubaVP3);
+    padding: 10px;
+    border-radius: 15px;
+    border-color: var(--kubaVP3);
+}
+
+@media (max-width: 525px) {
+    #content {
+        padding-top: 160px;
+    }
+    #logo {
+        text-align: center;
+        float: none;
+    }
+    #logo-text {
+        float: none;
+        text-align: center;
+    }
+
+    
+  #logo-text:hover::after {
+    transform: translateX(-50%) scaleX(1);
+  }
+
+  #logo-text::after {
+    width: 50%;
+    transform-origin: center;
+    left: 50%;
+  }
+
+    #wyszukiwarka {
+        float: none;
+        width: calc(100% - 20px);
+        margin-right: 0;
+
+    }
+}
+
+#navmenu {
+    display: none;
+}
+
+#navmenu-d {
+    display: block;
+}
+
+#poradnik-content {
+    width: 96%;
+    padding: 2%;
+}
+
+@media (min-width: 1200px) {
+    #navmenu {
+        display: block;
+        width: 20%;
+        float: left;
+        min-height: 1px;
+    }
+    #navmenu-d {
+        display: none;
+    }
+}
+
+#szukaj:focus {
+    font-size: 32px;
+    background-color: var(--kubaVP3);
+    border-color: var(--kubaVP3L15);
+    color: var(--kubaVP1);
+    outline: none;
+}
+
+#loginpanel {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    padding: 40px;
+    border-radius: 15px;
+    margin: auto;
+}
+
+.LRGI {
+     width: 100%;
+     background-color: var(--kubaVP1);
+     color: var(--kubaVP3);
+     padding: 2px;
+     border-radius: 3px;
+     border-color: var(--kubaVP3);
+}
+
+.LRGI:focus {
+    font-size: 16px;
+    background-color: var(--kubaVP3);
+    border-color: var(--kubaVP3L15);
+    color: var(--kubaVP1);
+    outline: none;
+}
+
+.LRGBI {
+    position: relative;
+    width: calc(100% + 8px);
+    background-color: var(--kubaVP1);
+    color: var(--kubaVP3);
+    padding: 2px;
+    border-radius: 3px;
+    border-color: var(--kubaVP3);
+}
+
+.LRGBI:hover {
+    background-color: var(--kubaVP3);
+    color: var(--kubaVP1);
+    padding: 2px;
+    border-radius: 5px;
+    border-color: var(--kubaVP2);
+}
