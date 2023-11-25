@@ -17,7 +17,7 @@
                      <h1 id="logo-text">G5Tabs</h1>
                  </a></div>
              <div id="wyszukiwarka">
-            <form onsubmit="handleSubmit(event)">
+            <form onsubmit='handleSubmitSearch(event)'>
                  <input name="szukaj" id="szukaj" type="text" placeholder="Szukaj...">
              </form> </div>
              <div style="clear: both"></div>
@@ -35,8 +35,7 @@
                 <div id='loginpanel'>  
                 <h1>Witaj w G5Tabs</h1>
                 <br/>
-               
-                    <form id='loginform' style='display: none;'> 
+                    <form id='loginform' style='display: none;' onsubmit='handleSubmitSearch(event)'> 
                     <p>Oto panel logowania do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
                         <input type='text' name='login' id='login' class='LRGI'> <br/><br/>
@@ -44,7 +43,7 @@
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/><br/>
                         <input type='submit' value='Zaloguj się' class='LRGBI'>
                     </form>
-                    <form id='registerform' style='display: none;'> 
+                    <form id='registerform' style='display: none;' onsubmit='handleSubmitSearch(event)'> 
                     <p>Oto panel rejestracji do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
                         <input type='text' name='login' id='login' class='LRGI'> <br/><br/>

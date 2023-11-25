@@ -85,7 +85,27 @@ a:hover {
     border-color: var(--kubaVP3);
 }
 
+.alert {
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: calc(1% + 15px);
+    top: 0;
+    padding: 20px;
+    border: 3px solid purple;
+    border-radius: 15px;
+    z-index: 1000;
+    animation: 5.1s ease-in 0s ag1;
+
+}
+@media (max-width: 1000px) {
+    .alert {
+        top: 100%;
+        animation: 5.1s ease-in 0s ag2;
+    }
+}
+
 @media (max-width: 525px) {
+
     #content {
         padding-top: 160px;
     }
@@ -191,4 +211,44 @@ a:hover {
     padding: 2px;
     border-radius: 5px;
     border-color: var(--kubaVP2);
+}
+
+
+
+@keyframes ag1 {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(calc(1% + 100px));
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(calc(1% + 100px));
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+}
+
+@keyframes ag2 {
+    0% {
+        transform: translateY(101%);
+        opacity: 0;
+    }
+    20% {
+        transform: translateY(calc(-101% - 15px));
+        opacity: 1;
+    }
+    80% {
+        transform: translateY(calc(-101% - 15px));
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(101%);
+        opacity: 0;
+    }
 }

@@ -29,7 +29,7 @@ function generateLighterColor(property, lightenPercentage) {
   }
 
   function genereteVarColors() {
-    for (let i = 1; i <= 50; i++) {
+    for (let i = 5; i <= 50; i+=5) {
       generateLighterColor('--kubaVP1' , i); 
       generateLighterColor('--kubaVP2' , i); 
       generateLighterColor('--kubaVP3' , i); 
@@ -59,3 +59,55 @@ function updateLRG() {
 }
 
 updateLRG();
+
+
+class Alert {
+  constructor(title, description) {
+    this.title = title;
+    this.description = description;
+  }
+}
+
+let alertQueue = [];
+let isAlertDisplayed = false;
+
+function addAlert(title, description) {
+  alertQueue.push(new Alert(title, description));
+}
+
+function displayAlert() {
+  if (!isAlertDisplayed && alertQueue.length > 0) {
+    isAlertDisplayed = true;
+    const { title, description } = alertQueue.shift();
+    const alertElement = document.createElement('div');
+    alertElement.classList.add('alert');
+    alertElement.innerHTML = `<h2>${title}</h2>` + breakText(description, 30);
+    document.body.appendChild(alertElement);
+
+    setTimeout(() => {
+      document.body.removeChild(alertElement);
+      isAlertDisplayed = false; 
+    }, 5000); 
+  }
+}
+
+function breakText(text, count) {
+  var newText = '';
+  var a = 0;
+  for (var i = 0; i < text.length; i++) {
+    newText += text[i];
+    if (a >= count) {
+      if (text[i] === ' ') {
+        a = 0;
+        newText += text[i];
+        newText += '<br>';
+    }
+    }
+    a++;
+  }
+  return newText;
+}
+
+setInterval(() => {
+  displayAlert();
+}, 500);
