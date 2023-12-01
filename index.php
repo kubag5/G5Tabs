@@ -35,7 +35,7 @@
                 <div id='loginpanel'>  
                 <h1>Witaj w G5Tabs</h1>
                 <br/>
-                    <form id='loginform' style='display: none;' onsubmit='handleSubmitSearch(event)'> 
+                    <form id='loginform' style='display: none;' onsubmit='handleSubmitLogin(event)'> 
                     <p>Oto panel logowania do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
                         <input type='text' name='login' id='login' class='LRGI'> <br/><br/>
@@ -43,7 +43,7 @@
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/><br/>
                         <input type='submit' value='Zaloguj się' class='LRGBI'>
                     </form>
-                    <form id='registerform' style='display: none;' onsubmit='handleSubmitSearch(event)'> 
+                    <form id='registerform' style='display: none;' onsubmit='handleSubmitRegister(event)'> 
                     <p>Oto panel rejestracji do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
                         <input type='text' name='login' id='login' class='LRGI'> <br/><br/>

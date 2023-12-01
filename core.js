@@ -111,3 +111,75 @@ function breakText(text, count) {
 setInterval(() => {
   displayAlert();
 }, 500);
+
+function handleSubmitLogin(event) {
+  event.preventDefault();
+  const login = event.target.elements['login'].value;
+  const pass = event.target.elements['pass'].value;
+  if (login != null && pass != null && pass.length !== 0 && login.length !== 0) {
+    login(login, pass);
+  } else {
+    showInformation('<span class="error">Błędnie wypełniony formularz.</span>')
+  }
+}
+
+function handleSubmitRegister(event) {
+  event.preventDefault();
+  const login = event.target.elements['login'].value;
+  const pass = event.target.elements['pass'].value;
+  const pass2 = event.target.elements['pass2'].value;
+  if (login != null && pass != null && pass.length !== 0 && login.length !== 0 && pass2 === pass) {
+    register(login, pass, pass2);
+  } else {
+    showInformation('<span class="error">Błędnie wypełniony formularz.</span>')
+  }
+
+}
+
+function login(login, pass) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          let responseJSON = JSON.parse(xhr.responseText);
+          let data = responseJSON.info;
+          let js = responseJSON.js;
+          let parser = new DOMParser();
+          data = parser.parseFromString(data, "text/html");
+          showInformation(data.body.innerHTML);
+          doJs(js);
+      } else {
+        showInformation('<span class="error">Błąd połączenia.</span>');
+      }
+  };
+  xhr.open("GET", "login.php?" /*...*/, true);
+  xhr.send();
+}
+
+function register(login, pass) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+          let responseJSON = JSON.parse(xhr.responseText);
+          let data = responseJSON.info;
+          let js = responseJSON.js;
+          let parser = new DOMParser();
+          data = parser.parseFromString(data, "text/html");
+          showInformation(data.body.innerHTML);
+          doJs(js);
+      } else {
+          showInformation('<span class="error">Błąd połączenia.</span>');
+      }
+  };
+  xhr.open("GET", "register.php?" /*...*/, true);
+  xhr.send();
+}
+
+
+
+function showInformation(inf) {
+
+}
+
+function doJs(js) {
+
+}
