@@ -25,7 +25,6 @@
          </div>
          <div id="content">           
             <?php 
-
             function check() {
                 notlogged();
             }
