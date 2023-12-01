@@ -174,9 +174,9 @@ function register(login, pass) {
 
 
 function showInformation(inf) {
-
+addAlert("Informacja", inf);
 }
 
 function doJs(js) {
-
+    eval(js);
 }
