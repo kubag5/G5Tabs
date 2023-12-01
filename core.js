@@ -114,7 +114,7 @@ function handleSubmitLogin(event) {
   const login = event.target.elements['login'].value;
   const pass = event.target.elements['pass'].value;
   if (login != null && pass != null && pass.length !== 0 && login.length !== 0) {
-    login(login, pass);
+    loginUser(login, pass);
   } else {
     showInformation('<span class="error">Błędnie wypełniony formularz.</span>')
   }
@@ -133,7 +133,7 @@ function handleSubmitRegister(event) {
 
 }
 
-function login(login, pass) {
+function loginUser(login, pass) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
