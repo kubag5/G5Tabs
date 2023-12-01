@@ -96,13 +96,10 @@ function breakText(text, count) {
   var a = 0;
   for (var i = 0; i < text.length; i++) {
     newText += text[i];
-    if (a >= count) {
-      if (text[i] === ' ') {
+      if (a >= count && text[i] === ' ') {
         a = 0;
-        newText += text[i];
-        newText += '<br>';
-    }
-    }
+        newText += text[i] + '<br>';
+      }
     a++;
   }
   return newText;
