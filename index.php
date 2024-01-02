@@ -53,6 +53,13 @@
                         <input type='submit' value='Zarejestruj się' class='LRGBI'>
                     </form><br/><br/>
                     <button onclick='changeLRG();' id='LRGBT' class='LRGBI' >Chce sie zarejestrować</button>
+                    <br/><br/><div id='information-box'> </div>
+                </div>
+             
+                <br/><br/><hr/><br/>
+                <h1>Publiczne projekty użytkowników</h1> <br/>
+                <div class='tab-list'>
+                    - - - -
                 </div>
                 ";
                 

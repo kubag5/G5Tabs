@@ -2,6 +2,7 @@
 * [do czego służy aplikacja?](#do-czego-służy-aplikacja)
 * [jak będą działać zakładki?](#jak-będą-działać-zakładki)
 * [kategorie zakładek](#kategorie-zakładek)
+* [Dziennik zmian](#dziennik-zmian)
 
 ## do czego służy aplikacja?
 Aplikacja będzie umożliwiać tworzenie użytkownikowi własnych zakładek.
@@ -22,3 +23,9 @@ użytkownik w planie może dodawać jakie ma plany na przyszłość. strona będ
 </details>
 <br/>
 nowe kategorie zakładek będą wymyślane z czasem. 
+
+## Dziennik zmian
+### 0.1.7
++ Wprowadzono **Dziennik zmian**
++ rozpoczęto tworzenie menadżera akcji do zażądzania interaakcjami z poziomu serwera.
++ inne mniejsze zmiany

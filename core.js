@@ -72,6 +72,7 @@ let alertQueue = [];
 let isAlertDisplayed = false;
 
 function addAlert(title, description) {
+  if (title != null && description != null)
   alertQueue.push(new Alert(title, description));
 }
 
@@ -136,26 +137,29 @@ function handleSubmitRegister(event) {
 function loginUser(login, pass) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
-          let responseJSON = JSON.parse(xhr.responseText);
-          let data = responseJSON.info;
-          let js = responseJSON.js;
-          let parser = new DOMParser();
-          data = parser.parseFromString(data, "text/html");
-          showInformation(data.body.innerHTML);
-          doJs(js);
-      } else {
-        showInformation('<span class="error">Błąd połączenia.</span>');
-      }
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let responseJSON = JSON.parse(xhr.responseText);
+        let data = responseJSON.info;
+        let js = responseJSON.js;
+        let parser = new DOMParser();
+        data = parser.parseFromString(data, "text/html");
+        showInformation(data.body.innerHTML);
+        doJs(js);
+    } else {
+     showInformation('<span class="error">Błąd połączenia.</span>');
+    }
+    }
   };
-  xhr.open("GET", "login.php?" /*...*/, true);
+  xhr.open("GET", "actionManager.php?action=0&A01=" + login + "&A02=" + pass, true);
   xhr.send();
 }
 
 function register(login, pass) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
-      if (xhr.readyState === 4 && xhr.status === 200) {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
           let responseJSON = JSON.parse(xhr.responseText);
           let data = responseJSON.info;
           let js = responseJSON.js;
@@ -166,17 +170,29 @@ function register(login, pass) {
       } else {
           showInformation('<span class="error">Błąd połączenia.</span>');
       }
+    }
   };
-  xhr.open("GET", "register.php?" /*...*/, true);
+  xhr.open("GET", "actionManager.php?action=1&A01=" + login + "&A02=" + pass, true);
   xhr.send();
 }
 
 
 
 function showInformation(inf) {
-addAlert("Informacja", inf);
+  if (inf != null) {
+    addAlert("Informacja", inf);
+    if (document.getElementById("information-box") != null) {
+      document.getElementById("information-box").innerHTML = inf;
+    }  
+  }
 }
 
 function doJs(js) {
-    eval(js);
+  // funkcja do wywołania wcześniej przygotowanych js.
+    if (js == 0) {
+      addAlert("Wykonano Js 0");
+    }
+    if (js == 1) {
+      addAlert("Wykonano Js 1");
+    }
 }
