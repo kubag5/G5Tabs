@@ -25,7 +25,13 @@ użytkownik w planie może dodawać jakie ma plany na przyszłość. strona będ
 nowe kategorie zakładek będą wymyślane z czasem. 
 
 ## Dziennik zmian
+
+### 0.1.8
++ Interakcja "Login"
++ Interakcja "Rejestracja"
++ Mniejsze zmiany w pliku core.js
+
 ### 0.1.7
 + Wprowadzono **Dziennik zmian**
-+ rozpoczęto tworzenie menadżera akcji do zażądzania interaakcjami z poziomu serwera.
-+ inne mniejsze zmiany
++ Rozpoczęto tworzenie menadżera akcji do zażądzania interaakcjami z poziomu serwera.
++ Inne mniejsze zmiany

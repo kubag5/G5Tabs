@@ -182,7 +182,7 @@ function showInformation(inf) {
   if (inf != null) {
     addAlert("Informacja", inf);
     if (document.getElementById("information-box") != null) {
-      document.getElementById("information-box").innerHTML = inf;
+      document.getElementById("information-box").innerHTML = breakText(inf, 20);
     }  
   }
 }
@@ -190,9 +190,10 @@ function showInformation(inf) {
 function doJs(js) {
   // funkcja do wywołania wcześniej przygotowanych js.
     if (js == 0) {
-      addAlert("Wykonano Js 0");
+     
     }
     if (js == 1) {
-      addAlert("Wykonano Js 1");
+      login = true;
+      updateLRG();
     }
 }
