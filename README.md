@@ -26,6 +26,10 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.1.9
++ Załatanie błędu z bardzo długimi nazwami użytkowników. (wprowadzono ograniczenie 50 znaków).
++ Nowa animacja "borderu" od panelu logowania.
+
 ### 0.1.8
 + Interakcja "Login"
 + Interakcja "Rejestracja"

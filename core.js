@@ -72,7 +72,7 @@ let alertQueue = [];
 let isAlertDisplayed = false;
 
 function addAlert(title, description) {
-  if (title != null && description != null)
+  if (title != null && description != null && alertQueue.length < 6)
   alertQueue.push(new Alert(title, description));
 }
 
@@ -117,7 +117,8 @@ function handleSubmitLogin(event) {
   if (login != null && pass != null && pass.length !== 0 && login.length !== 0) {
     loginUser(login, pass);
   } else {
-    showInformation('<span class="error">Błędnie wypełniony formularz.</span>')
+    showInformation('<span class="error">Błędnie wypełniony formularz.</span>');
+    doJs(-1);
   }
 }
 
@@ -126,10 +127,11 @@ function handleSubmitRegister(event) {
   const login = event.target.elements['login'].value;
   const pass = event.target.elements['pass'].value;
   const pass2 = event.target.elements['pass2'].value;
-  if (login != null && pass != null && pass.length !== 0 && login.length !== 0 && pass2 === pass) {
+  if (login != null && pass != null && pass.length !== 0 && login.length !== 0 && pass2 === pass && login.length < 51) {
     register(login, pass, pass2);
   } else {
-    showInformation('<span class="error">Błędnie wypełniony formularz.</span>')
+    showInformation('<span class="error">Błędnie wypełniony formularz.</span>');
+    doJs(-1);
   }
 
 }
@@ -148,6 +150,7 @@ function loginUser(login, pass) {
         doJs(js);
     } else {
      showInformation('<span class="error">Błąd połączenia.</span>');
+     doJs(-1);
     }
     }
   };
@@ -169,6 +172,7 @@ function register(login, pass) {
           doJs(js);
       } else {
           showInformation('<span class="error">Błąd połączenia.</span>');
+          doJs(-1);
       }
     }
   };
@@ -189,11 +193,40 @@ function showInformation(inf) {
 
 function doJs(js) {
   // funkcja do wywołania wcześniej przygotowanych js.
-    if (js == 0) {
-     
+
+    if (js == -1) {
+      const loginpanel = document.getElementById("loginpanel");
+      if (!loginpanel.classList.contains("border-error") && !loginpanel.classList.contains("border-done")) {
+        document.getElementById("loginpanel").classList.add("border-error");
+        setTimeout(() => {
+        document.getElementById("loginpanel").classList.remove("border-error");
+        }, 4900);
+      }
+
     }
+
+
+    if (js == 0) {
+      const loginpanel = document.getElementById("loginpanel");
+      if (!loginpanel.classList.contains("border-error") && !loginpanel.classList.contains("border-done")) {
+        document.getElementById("loginpanel").classList.add("border-done");
+        setTimeout(() => {
+        document.getElementById("loginpanel").classList.remove("border-done");
+        }, 4900);
+      }
+    }
+
+
     if (js == 1) {
+      const loginpanel = document.getElementById("loginpanel");
       login = true;
       updateLRG();
-    }
+      if (!loginpanel.classList.contains("border-error") && !loginpanel.classList.contains("border-done")) {
+        document.getElementById("loginpanel").classList.add("border-done");
+        setTimeout(() => {
+        document.getElementById("loginpanel").classList.remove("border-done");
+        }, 4900);
+      }
+      }
+      
 }

@@ -176,6 +176,50 @@ a:hover {
     padding: 40px;
     border-radius: 15px;
     margin: auto;
+    border-color: rgba(0, 0, 0, 0);
+    border-style: inset;
+}
+
+.border-done {
+    border-color: rgb(19, 112, 19);
+    animation-name: bdb1;
+    animation-duration: 5s;
+}
+
+.border-error {
+    border-color: rgb(202, 16, 16);
+    animation-name: bdb2;
+    animation-duration: 5s;
+
+}
+@keyframes bdb2 {
+    0% {
+        border-color: rgb(202, 16, 16, 0);
+    }
+    5% {
+        border-color:rgb(202, 16, 16, 1);
+    }
+    80% {
+        border-color: rgb(202, 16, 16, 1);
+    }
+    100% {
+        border-color: rgb(202, 16, 16, 0);
+    }
+    }
+
+@keyframes bdb1 {
+0% {
+    border-color: rgb(19, 112, 19, 0);
+}
+5% {
+    border-color: rgb(19, 112, 19, 1);
+}
+80% {
+    border-color: rgb(19, 112, 19, 1);
+}
+100% {
+    border-color: rgb(19, 112, 19, 0);
+}
 }
 
 .LRGI {

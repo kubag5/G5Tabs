@@ -37,7 +37,7 @@
                     <form id='loginform' style='display: none;' onsubmit='handleSubmitLogin(event)'> 
                     <p>Oto panel logowania do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
-                        <input type='text' name='login' id='login' class='LRGI'> <br/><br/>
+                        <input type='text' name='login' id='login' class='LRGI' maxlength='50'> <br/><br/>
                         <label for='pass'>Hasło: </label><br/><br/>
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/><br/>
                         <input type='submit' value='Zaloguj się' class='LRGBI'>
@@ -45,7 +45,7 @@
                     <form id='registerform' style='display: none;' onsubmit='handleSubmitRegister(event)'> 
                     <p>Oto panel rejestracji do G5Tabs:</p><br/>
                         <label for='login'>Login: </label><br/><br/>
-                        <input type='text' name='login' id='login' class='LRGI'> <br/><br/>
+                        <input type='text' name='login' id='login' class='LRGI' maxlength='50'> <br/><br/>
                         <label for='pass'>Hasło: </label><br/><br/>
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/>
                         <label for='pass2'>Powtórz Hasło: </label><br/><br/>
