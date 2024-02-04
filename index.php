@@ -26,7 +26,17 @@
          <div id="content">           
             <?php 
             function check() {
-                notlogged();
+                session_start();
+                if (!isset($_SESSION['zalogowany'])) {
+                    notlogged();
+                } else {
+                    if ($_SESSION['zalogowany']) {
+                        logged();
+                    } else {
+                        notlogged();
+                    }
+                }
+                session_write_close();
             }
 
             function notlogged() {
@@ -40,7 +50,7 @@
                         <input type='text' name='login' id='login' class='LRGI' maxlength='50'> <br/><br/>
                         <label for='pass'>Hasło: </label><br/><br/>
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/><br/>
-                        <input type='submit' value='Zaloguj się' class='LRGBI'>
+                        <input type='submit' value='Zaloguj się' class='LRGBI' id='LRGBT1'>
                     </form>
                     <form id='registerform' style='display: none;' onsubmit='handleSubmitRegister(event)'> 
                     <p>Oto panel rejestracji do G5Tabs:</p><br/>
@@ -50,7 +60,7 @@
                         <input type='password' name='pass' id='password' class='LRGI'><br/><br/>
                         <label for='pass2'>Powtórz Hasło: </label><br/><br/>
                         <input type='password' name='pass2' id='password' class='LRGI'><br/><br/><br/>
-                        <input type='submit' value='Zarejestruj się' class='LRGBI'>
+                        <input type='submit' value='Zarejestruj się' class='LRGBI' id='LRGBT2'>
                     </form><br/><br/>
                     <button onclick='changeLRG();' id='LRGBT' class='LRGBI' >Chce sie zarejestrować</button>
                     <br/><br/><div id='information-box'> </div>
@@ -66,7 +76,27 @@
             }
 
             function logged() {
-                echo "Zawartość tej strony nie jest jeszcze dostępna! // zalogowany";
+                $conn = new mysqli("localhost", "root", "", "g5tabs");
+                if ($conn->connect_error) {
+                    die("Connection failed");
+                }
+                $sql = "SELECT dane, id FROM tabs WHERE id_u = ".$_SESSION['id'];
+                $result = $conn->query($sql);
+                echo "
+                <h2>Twoje Taby:</h2>
+                <div class='projectList'> ";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        $dane = $row["dane"];
+                        $json = json_decode($dane, true);
+                        $name = $json["name"];
+                        echo createProjectDiv($name, $row['id']);
+                    }
+                }
+                echo "</div>";
+            }
+            function createProjectDiv($name, $id) {
+                return " <div class='project'>".$name." | ".$id." | <a href='tabs/?id=".$id."' target='_blank'>Zobacz</a></div>";
             }
 
             check();

@@ -1,5 +1,6 @@
 <?php
 // ini_set('display_errors', 0);
+
 $conn = new mysqli("localhost", "root", "", "g5tabs");
 if (!isset($_GET['action'])) {
     sendReturn("Nie wprowadzono wymaganych danych");
@@ -9,8 +10,8 @@ if (!$conn) {
     sendReturn("BŁĄD: Serwerowi nie udało połączyć się z baza danych.");
 }
 
-
 // LOGIN
+session_start();
 if ($action == 0) {
 if (!isset($_GET['A01'], $_GET['A02'])) {
 sendReturn("Nie wprowadzono wymaganych danych");
@@ -30,7 +31,12 @@ sendReturn("Nie wprowadzono wymaganych danych");
             $stmt->bind_result($userId, $dbpass);
             $stmt->fetch();
            if (password_verify($pass, $dbpass)) {
-            sendReturn("Wprowadzone dane są poprawne.", 0);
+            session_regenerate_id();
+            $_SESSION['zalogowany'] = TRUE;
+	    	$_SESSION['name'] = $login;
+	    	$_SESSION['id'] = $userId;
+            session_write_close();
+            sendReturn("Wprowadzone dane są poprawne. Zaraz nastąpi przekierowanie!", 0);
            } else {
             sendReturn("Wprowadzone dane są nieprawidłowe. Logowanie nie udane.");
            }
@@ -46,6 +52,9 @@ sendReturn("Nie wprowadzono wymaganych danych");
 
 // REGISTER
 if ($action == 1) {
+
+    sendReturn("Opcja rejestracji została wyłączona przez administratora. Przepraszamy za utrudnienia!");
+
 if (!isset($_GET['A01'], $_GET['A02'])) {
     sendReturn("Nie wprowadzono wymaganych danych");
 }

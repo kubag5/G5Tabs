@@ -45,6 +45,9 @@ function changeLRG() {
 }
 
 function updateLRG() {
+  if (document.getElementById("registerform") == null) {
+    return;
+  }
   if (login) document.getElementById("registerform").style.display = "none";
   if (!login) document.getElementById("loginform").style.display = "none";
 
@@ -110,8 +113,15 @@ setInterval(() => {
   displayAlert();
 }, 500);
 
+let isRegORLog = false;
+
 function handleSubmitLogin(event) {
   event.preventDefault();
+  if (isRegORLog == true) {
+    return;
+  }
+  isRegORLog = true;
+  document.getElementById("LRGBT").setAttribute("disabled", "");
   const login = event.target.elements['login'].value;
   const pass = event.target.elements['pass'].value;
   if (login != null && pass != null && pass.length !== 0 && login.length !== 0) {
@@ -124,6 +134,11 @@ function handleSubmitLogin(event) {
 
 function handleSubmitRegister(event) {
   event.preventDefault();
+  if (isRegORLog) {
+    return;
+  }
+  isRegORLog = true;
+  document.getElementById("LRGBT").setAttribute("disabled", "");
   const login = event.target.elements['login'].value;
   const pass = event.target.elements['pass'].value;
   const pass2 = event.target.elements['pass2'].value;
@@ -200,6 +215,8 @@ function doJs(js) {
         document.getElementById("loginpanel").classList.add("border-error");
         setTimeout(() => {
         document.getElementById("loginpanel").classList.remove("border-error");
+        document.getElementById("LRGBT").removeAttribute("disabled");
+        isRegORLog = false;
         }, 4900);
       }
 
@@ -212,8 +229,10 @@ function doJs(js) {
         document.getElementById("loginpanel").classList.add("border-done");
         setTimeout(() => {
         document.getElementById("loginpanel").classList.remove("border-done");
+        document.location.reload();
         }, 4900);
       }
+
     }
 
 
@@ -225,6 +244,8 @@ function doJs(js) {
         document.getElementById("loginpanel").classList.add("border-done");
         setTimeout(() => {
         document.getElementById("loginpanel").classList.remove("border-done");
+        document.getElementById("LRGBT").removeAttribute("disabled");
+        isRegORLog = false;
         }, 4900);
       }
       }

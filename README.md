@@ -26,6 +26,11 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.1
++ System sesji
++ System wyświetlania zakładki "Linia czasu"
++ Załatanie wszystkich znalezionych błędów i dodatnie kilka innych mniejszych zmian
+
 ### 0.1.9
 + Załatanie błędu z bardzo długimi nazwami użytkowników. (wprowadzono ograniczenie 50 znaków).
 + Nowa animacja "borderu" od panelu logowania.

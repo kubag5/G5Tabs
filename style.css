@@ -28,6 +28,7 @@ body {
     font-weight: bold;
     padding: 15px;
     background-color: var(--kubaVP2);
+    height: 5vh;
 }
 
 #navpack {
@@ -295,4 +296,26 @@ a:hover {
         transform: translateY(101%);
         opacity: 0;
     }
+}
+
+button:disabled {
+    opacity: 0.5;
+}
+
+
+.project {
+    padding: 25px;
+    width: fit-content;
+    background-color: var(--kubaVP2);
+    border-radius: 15px;
+    box-sizing: content-box;
+    border: 2px solid var(--kubaVP3);
+    margin: auto;    
+    margin-top: 15px;
+    color: var(--kubaVP3L50);
+}
+
+.projectList {
+    margin-top: 2%;
+
 }
