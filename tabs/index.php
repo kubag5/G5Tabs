@@ -38,8 +38,9 @@
             if (!is_numeric($id)) {
                 echo "<h1>Podano błędne ID.</h1></div></div></div></body></html>";
                 exit;
-            }
-            $conn = new mysqli("localhost", "root", "", "g5tabs");
+            }                
+            require_once("../config.php");
+            $conn = new mysqli($host, $user, $pass, $db);
             if ($conn->connect_error) {
                 die("Connection failed");
             }

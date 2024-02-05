@@ -26,6 +26,9 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.3
++ dodano config
+
 ### 0.2.2
 + System dodawania Tabów (Zakładek)
 + System usuwania Tabów (Zakładek)

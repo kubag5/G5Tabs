@@ -1,7 +1,8 @@
 <?php
-// ini_set('display_errors', 0);
 
-$conn = new mysqli("localhost", "root", "", "g5tabs");
+
+require_once("../config.php");
+$conn = new mysqli($host, $user, $pass, $db);
 session_start();
 if (!isset($_GET['action'])) {
     sendReturn("Nie wprowadzono wymaganych danych");
