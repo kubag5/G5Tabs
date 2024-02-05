@@ -1,7 +1,7 @@
 <?php
 
 
-require_once("../config.php");
+require("config.php");
 $conn = new mysqli($host, $user, $pass, $db);
 session_start();
 if (!isset($_GET['action'])) {

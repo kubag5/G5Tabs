@@ -26,6 +26,10 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.4
++ naprawa błędu "ścieżki configu"
++ dodanie pliku sql
+
 ### 0.2.3
 + dodano config
 

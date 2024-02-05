@@ -39,7 +39,7 @@
                 echo "<h1>Podano błędne ID.</h1></div></div></div></body></html>";
                 exit;
             }                
-            require_once("../config.php");
+            require("../config.php");
             $conn = new mysqli($host, $user, $pass, $db);
             if ($conn->connect_error) {
                 die("Connection failed");

@@ -25,7 +25,9 @@
          </div>
          <div id="content">           
             <?php 
+  
             function check() {
+                require("config.php");
                 session_start();
                 if (!isset($_SESSION['zalogowany'])) {
                     notlogged();
@@ -76,7 +78,7 @@
             }
 
             function logged() { 
-                require_once("../config.php");
+                require("config.php");
                 $conn = new mysqli($host, $user, $pass, $db);
                 if ($conn->connect_error) {
                     die("Connection failed");
