@@ -2,6 +2,7 @@
 // ini_set('display_errors', 0);
 
 $conn = new mysqli("localhost", "root", "", "g5tabs");
+session_start();
 if (!isset($_GET['action'])) {
     sendReturn("Nie wprowadzono wymaganych danych");
 }
@@ -11,7 +12,7 @@ if (!$conn) {
 }
 
 // LOGIN
-session_start();
+
 if ($action == 0) {
 if (!isset($_GET['A01'], $_GET['A02'])) {
 sendReturn("Nie wprowadzono wymaganych danych");
@@ -53,7 +54,7 @@ sendReturn("Nie wprowadzono wymaganych danych");
 // REGISTER
 if ($action == 1) {
 
-    sendReturn("Opcja rejestracji została wyłączona przez administratora. Przepraszamy za utrudnienia!");
+    // sendReturn("Opcja rejestracji została wyłączona przez administratora.");
 
 if (!isset($_GET['A01'], $_GET['A02'])) {
     sendReturn("Nie wprowadzono wymaganych danych");
@@ -88,6 +89,94 @@ if (empty($_GET['A01']) || empty($_GET['A02'])) {
 }
 
 
+// SAVE 
+if ($action == 2) { 
+    if (!isset($_GET['A01'], $_GET['A02'])) {
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    if (empty($_GET['A01']) || empty($_GET['A02'])) {  
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    $id = $_GET['A01'];
+    $json = verifyJSON($_GET['A02']);
+    $sql = "UPDATE tabs SET dane = ? WHERE id = ? AND id_u = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("ssi", $json, $id, $_SESSION['id']);
+        if ($stmt->execute()) {
+            sendReturn("Wykonano!");
+        } else {
+            sendReturn("Wystąpił błąd, nie udało się zapisać tab'a!");
+        }
+        $stmt->close();
+    } else {
+        sendReturn("Wystąpił błąd, nie udało się zapisać tab'a!");
+    }
+}
+
+if ($action == 3) { 
+    if (!isset($_GET['A01'])) {
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    if (empty($_GET['A01'])) {  
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    $id = $_GET['A01'];
+    $sql = "DELETE FROM tabs WHERE id = ? AND id_u = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param("si", $id, $_SESSION['id']);
+        if ($stmt->execute()) {
+            sendReturn("Wykonano!");
+        } else {
+            sendReturn("Wystąpił błąd, nie udało się zapisać tab'a!");
+        }
+        $stmt->close();
+    } else {
+        sendReturn("Wystąpił błąd, nie udało się zapisać tab'a!");
+    }
+}
+
+if ($action == 4) { 
+    $default = '{"name": "Nowy Tab", "type": 1, "daty": [{"text": "przykladowy box", "data": "1 STY 2024"}]}';
+    $sql = "INSERT INTO tabs(id_u, dane) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $_SESSION['id'], $default);
+    if ($stmt->execute()) {
+        sendReturn("Dodano!");
+    } else {
+        sendReturn("Nieoczekiwany Błąd");
+    }
+}
+
+
+
+function verifyJSON($jsonData) {
+    try {
+        $data = json_decode($jsonData, true);
+        if (!is_array($data)) {
+            throw new Exception("Nie udało się zdekodować danych JSON");
+        }
+        $usefulKeys = ["type", "name", "daty"];
+        $unusedKeys = array_diff(array_keys($data), $usefulKeys);
+        foreach ($unusedKeys as $key) {
+            unset($data[$key]);
+        }
+        if (isset($data['daty']) && is_array($data['daty'])) {
+            foreach ($data['daty'] as &$entry) {
+                $validKeys = ["data", "text"];
+                $entry = array_intersect_key($entry, array_flip($validKeys));
+             }
+        }
+        $updatedJsonData = json_encode($data, JSON_PRETTY_PRINT);
+        return $updatedJsonData;
+    } catch (Exception $e) {
+        sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+    }
+  
+}
+
+
 function sendReturn($info = "null", $javascript = -1) {
     global $conn;
     $response = [
@@ -96,6 +185,7 @@ function sendReturn($info = "null", $javascript = -1) {
     ];
     $conn->close();
     echo json_encode($response);
+    session_write_close();
     exit;
 }
 

@@ -170,12 +170,12 @@ a:hover {
     justify-content: center;
     align-items: center;
     height: 7vh;
-    border-right: 1px solid #000;
-    border-left: 1px solid #000;
+    border: 2px solid var(--kubaVP3);
     box-sizing: content-box;
     background-color: var(--kubaVP2);
     margin-top: 15vh;
     height: 25vh;
+    border-radius: 5px;
 }
 
 .tab1-subElement2 {

@@ -251,3 +251,140 @@ function doJs(js) {
       }
       
 }
+
+
+let edit = false;
+function editMode() {
+  document.getElementById("content").innerHTML = "wczytywanie...";
+  if (typeof json !== 'undefined') {
+    edit = true;
+    let cn = "";
+    cn += "<h1>Edytujesz: "+json.name+" </h1>"
+    if (typeof json.daty !== 'undefined') { 
+      json.daty.sort((a, b) => {
+        const dateA = parseDate(a.data);
+        const dateB = parseDate(b.data);
+        return dateA - dateB;
+      });
+      let i = 0;
+      json.daty.forEach(element => {
+        if (typeof element.data !== 'undefined' || typeof element.text !== 'undefined') { 
+          cn +=  "<div class='tabs1editmode'> TEXT: "+ element.text + " DATA: "+ element.data +" | <a onclick='deleteBox("+i+")'>USUŃ</a> </div>";
+        } else {
+          deleteBox(i);
+        }
+        i++;
+      });
+    }
+    cn += "<br/><hr/><br/> <h2>Dodaj: </h2>";
+    cn += `
+    <form onsubmit="handleSubmitEditAdd(event)" class="otherFrom">
+    <label for="dzien">Dzień:</label>
+    <input type="number" id="dzien" name="dzien" min="1" max="31" class='LRGI' required><br/><br/>
+    <label for="miesiac">Miesiąc:</label>
+    <input type="number" id="miesiac" name="miesiac" min="1" max="12" class='LRGI' required><br/><br/>
+    <label for="rok">Rok:</label>
+    <input type="number" id="rok" name="rok" class='LRGI' required><br/><br/>
+    <label for="tekst">Tekst:</label>
+    <input type="text" id="tekst" name="tekst" class='LRGI' maxlength='300' required> 
+    <br/><br/><br/>
+    <button type="submit" class='LRGBI'>Dodaj</button>
+    </form>
+    `
+    cn += "<br/><hr/><br/> <h2>Opcje: </h2>";
+    cn += "<br/><a onclick='saveJson()'> Zapisz </a><br/><br/>"
+    cn += "<br/><a onclick='deleteTab()'> Usuń cały TAB</a><br/><br/><br/>"
+
+
+
+    document.getElementById("content").innerHTML = cn;
+  }
+}
+
+function deleteBox(index) {
+  if (index >= 0 && index < json.daty.length) {
+    json.daty.splice(index, 1);
+    editMode();
+  }
+}
+
+function saveJson() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let responseJSON = JSON.parse(xhr.responseText);
+        let data = responseJSON.info;
+        let parser = new DOMParser();
+        data = parser.parseFromString(data, "text/html");
+        showInformation(data.body.innerHTML);
+    } else {
+     showInformation('<span class="error">Błąd połączenia.</span>');
+    }
+    }
+  };
+  xhr.open("GET", "actionManager.php?action=2&A01="  + projectID + "&A02=" + JSON.stringify(json), true);
+  xhr.send();
+}
+
+let months = ["STY", "LUT", "MAR", "KWI", "MAJ", "CZE", "LIP", "SIE", "WRZ", "PAŹ", "LIS", "GRU"];
+function parseDate(dateString) {
+  const parts = dateString.split(' ');
+  const day = parseInt(parts[0], 10);
+  const month = months.indexOf(parts[1]);
+  const year = parseInt(parts[2], 10);
+  return new Date(year, month, day);
+}
+
+
+function handleSubmitEditAdd(event) {
+  event.preventDefault();
+  const dzien = event.target.elements['dzien'].value;
+  const miesiac = event.target.elements['miesiac'].value;
+  const rok = event.target.elements['rok'].value;
+  const tekst = event.target.elements['tekst'].value;
+  const data = dzien + " " + months[miesiac-1] + " " + rok;
+  const newDate = { text: tekst, data: data };
+  json.daty.push(newDate);
+  editMode();
+}
+
+function deleteTab() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let responseJSON = JSON.parse(xhr.responseText);
+        let data = responseJSON.info;
+        let parser = new DOMParser();
+        data = parser.parseFromString(data, "text/html");
+        showInformation(data.body.innerHTML);
+        window.location.replace("index.php");
+    } else {
+     showInformation('<span class="error">Błąd połączenia.</span>');
+    }
+    }
+  };
+  xhr.open("GET", "actionManager.php?action=3&A01="  + projectID, true);
+  xhr.send();
+}
+
+function addTab() {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        let responseJSON = JSON.parse(xhr.responseText);
+        let data = responseJSON.info;
+        let parser = new DOMParser();
+        data = parser.parseFromString(data, "text/html");
+        showInformation(data.body.innerHTML);
+        location.reload();
+    } else {
+     showInformation('<span class="error">Błąd połączenia.</span>');
+    }
+    }
+  };
+  xhr.open("GET", "actionManager.php?action=4", true);
+  xhr.send();
+}

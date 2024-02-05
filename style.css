@@ -45,6 +45,7 @@ a {
 
 a:hover {
     color: var(--kubaVP3L15);
+    cursor: pointer;
 }
 
 #logo-text {
@@ -318,4 +319,25 @@ button:disabled {
 .projectList {
     margin-top: 2%;
 
+}
+
+.tabs1editmode {
+    background-color: var(--kubaVP2);
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    border-radius: 15px;
+    width: fit-content;
+    color: var(--kubaVP3L50);
+}
+
+.otherFrom {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: fit-content;
+    padding: 40px;
+    border-radius: 15px;
+    margin: auto;
+    border-color: rgba(0, 0, 0, 0);
+    border-style: inset;
 }

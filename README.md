@@ -26,6 +26,12 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.2
++ System dodawania Tabów (Zakładek)
++ System usuwania Tabów (Zakładek)
++ System edytowania Tabów (Zakładek)
++ Kilka (dość sporo) mniejszych zmian.
+
 ### 0.2.1
 + System sesji
 + System wyświetlania zakładki "Linia czasu"

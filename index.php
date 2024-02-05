@@ -80,9 +80,36 @@
                 if ($conn->connect_error) {
                     die("Connection failed");
                 }
-                $sql = "SELECT dane, id FROM tabs WHERE id_u = ".$_SESSION['id'];
-                $result = $conn->query($sql);
-                echo "
+                if (isset($_GET['edit'])) {
+                    $id = $_GET['edit'];
+                    if (!is_numeric($id)) {
+                        echo "<h1>Podano błędne ID.";
+                    } else {
+                        $sql = "SELECT dane, id FROM tabs WHERE id_u = ".$_SESSION['id']." AND id = ".$id;
+                        $result = $conn->query($sql);
+                        if ($result->num_rows > 0) {
+                            $dane = $result->fetch_assoc()["dane"];
+                            echo "wczytywanie...";
+                            echo "<script defer>
+                            let projectID = ".$id."
+                            let json = ".$dane."; 
+                            function opener() {
+                                setTimeout(() => {
+                                  try {
+                                    editMode();
+                                  } catch (error) {
+                                    opener();
+                                  }
+                                }, 500);
+                              }opener();</script>";
+                        } else {
+                            echo "<h1>Nie można uzyskać tej zakładki w trybie edycji. spróbuj zalogowac się na inne konto</h1>";
+                        }
+                    }
+                } else {
+                    $sql = "SELECT dane, id FROM tabs WHERE id_u = ".$_SESSION['id'];
+                    $result = $conn->query($sql);
+                    echo "
                 <h2>Twoje Taby:</h2>
                 <div class='projectList'> ";
                 if ($result->num_rows > 0) {
@@ -94,9 +121,13 @@
                     }
                 }
                 echo "</div>";
+                echo "<br/><a onclick='addTab()'>Dodaj zakładkę</a><br/><br/>";
+                echo "<br/><a href='logout.php'>Wyloguj</a>";
+                }
+                $conn->close();
             }
             function createProjectDiv($name, $id) {
-                return " <div class='project'>".$name." | ".$id." | <a href='tabs/?id=".$id."' target='_blank'>Zobacz</a></div>";
+                return " <div class='project'>".$name." | ID: ".$id." | <a href='tabs/?id=".$id."'>Zobacz</a> | <a href='?edit=".$id."'>Edytuj</a></div>";
             }
 
             check();

@@ -52,7 +52,7 @@
                     echo getTab1Element(htmlspecialchars($tab['text']), htmlspecialchars($tab['data']));
                 }
             } else {
-                echo getTab1Element("Ten Tab nie zawiera żadnych informacji", "---");
+                echo getTab1Element("Ten Tab nie istnieje", "---");
             }
             $conn->close();
             function getTab1Element($text, $date) {
