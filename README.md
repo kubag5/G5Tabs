@@ -26,6 +26,9 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.5.1
++ małe zmiany w kodzie
+
 ### 0.2.5
 + Zaaktualizowanie pliku SQL tak aby posiadał wszystkie tabele.
 + Dodano system wczytywania styli

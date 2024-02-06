@@ -1,4 +1,5 @@
 <?php
+ $styleList = array(); 
 if (isset($conn) && session_status() == PHP_SESSION_ACTIVE) {
     $sql = "SELECT id_st FROM users WHERE id = " . $_SESSION["id"];
     $result = $conn->query($sql);
@@ -13,6 +14,7 @@ if (isset($conn) && session_status() == PHP_SESSION_ACTIVE) {
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 if ($row["id"] == $style) {
+                    $styleList[] = $row;
                     $hex1 = $row["hex1"];
                     $hex2 = $row["hex2"];
                     $hex3 = $row["hex3"];

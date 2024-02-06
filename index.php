@@ -128,7 +128,14 @@
                 }
                 echo "</div>";
                 echo "<br/><a onclick='addTab()'>Dodaj zakładkę</a><br/><br/>";
-                echo "<br/><a href='logout.php'>Wyloguj</a>";
+                echo "<hr/><h2>Twoje Style:</h2><br/>";
+                foreach ($styleList as $row) {
+                            $hex1 = $row["hex1"];
+                            $hex2 = $row["hex2"];
+                            $hex3 = $row["hex3"];
+                            echo "<div>HEX'S: ".$hex1." ".$hex2." ".$hex3." </div>";
+                }
+                echo "<br/><hr/><br/><a href='logout.php'>Wyloguj</a>";
                 }
                 $conn->close();
             }
