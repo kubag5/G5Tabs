@@ -77,12 +77,15 @@
                 
             }
 
+            
+
             function logged() { 
                 require("config.php");
                 $conn = new mysqli($host, $user, $pass, $db);
                 if ($conn->connect_error) {
                     die("Connection failed");
                 }
+                include("styleManager.php");
                 if (isset($_GET['edit'])) {
                     $id = $_GET['edit'];
                     if (!is_numeric($id)) {

@@ -15,7 +15,7 @@ użytkownik będzie mógł wybrać czy zakładka ma być publiczna czy prywatna.
 ## Kategorie zakładek: 
 <details>
 <summary>Linia czasu</summary>
-użytkownik w lini czasu mógłby  dodawać co się stało lub stanie w danym dniu. a następnie strona by generowała linie na środku ekranu a na górze lub dole generowała by pojemniki z informacjami umieszczonymi przez użytkownika.
+użytkownik w lini czasu może dodawać co się stało lub stanie w danym dniu. a następnie strona generuje daty oraz kafelki informacjami umieszczonymi przez użytkownika. (w planach jest interakcja z kafelkami)
 </details>
 <details>
 <summary>Plan</summary>
@@ -25,6 +25,10 @@ użytkownik w planie może dodawać jakie ma plany na przyszłość. strona będ
 nowe kategorie zakładek będą wymyślane z czasem. 
 
 ## Dziennik zmian
+
+### 0.2.5
++ Zaaktualizowanie pliku SQL tak aby posiadał wszystkie tabele.
++ Dodano system wczytywania styli
 
 ### 0.2.4
 + naprawa błędu "ścieżki configu"

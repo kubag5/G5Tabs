@@ -44,6 +44,9 @@
             if ($conn->connect_error) {
                 die("Connection failed");
             }
+            session_start();
+            include "../styleManager.php";
+            session_write_close();
              $result = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
              if ($result->num_rows > 0) {
                 $dane = $result->fetch_assoc()["dane"];
