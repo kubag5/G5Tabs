@@ -4,6 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G5Tabs</title>
+    <?php
+    $isLogged = false;
+    require("config.php");
+    session_start();
+    if (isset($_SESSION['zalogowany'])) {
+        if ($_SESSION['zalogowany']) {
+            $isLogged = true;
+        }      
+    } 
+    if ($isLogged) {
+        $conn = new mysqli($host, $user, $pass, $db);
+        if ($conn->connect_error) {
+            die("Connection failed");
+        }
+        include("styleManager.php");
+    }
+    ?>
     <link rel="stylesheet" href="style.css">
     <script src="core.js" defer></script>
     <meta name="description" content="Używaj G5Tabs do tworzenia stron informacyjnych, kalendarzy i innych rzeczy!"> 
@@ -27,16 +44,11 @@
             <?php 
   
             function check() {
-                require("config.php");
-                session_start();
-                if (!isset($_SESSION['zalogowany'])) {
-                    notlogged();
+                global $isLogged;
+                if ($isLogged) {
+                    logged();
                 } else {
-                    if ($_SESSION['zalogowany']) {
-                        logged();
-                    } else {
-                        notlogged();
-                    }
+                    notlogged();
                 }
                 session_write_close();
             }
@@ -80,12 +92,7 @@
             
 
             function logged() { 
-                require("config.php");
-                $conn = new mysqli($host, $user, $pass, $db);
-                if ($conn->connect_error) {
-                    die("Connection failed");
-                }
-                include("styleManager.php");
+                global $conn;
                 if (isset($_GET['edit'])) {
                     $id = $_GET['edit'];
                     if (!is_numeric($id)) {
@@ -129,13 +136,18 @@
                 echo "</div>";
                 echo "<br/><a onclick='addTab()'>Dodaj zakładkę</a><br/><br/>";
                 echo "<hr/><h2>Twoje Style:</h2><br/>";
+                echo "<div class='style_item' style='color: #092331; background-color: #12505f; border: 3px solid #092331;'><br/><h3>G5TabsStyle</h3> Domylśny styl :O <button onclick='changeStyle(-1)' class='choose-bt'>Wybierz</button></div> ";
+                global $styleList;
                 foreach ($styleList as $row) {
+                            $sid = $row["id"];
                             $hex1 = $row["hex1"];
                             $hex2 = $row["hex2"];
                             $hex3 = $row["hex3"];
-                            echo "<div>HEX'S: ".$hex1." ".$hex2." ".$hex3." </div>";
+                            $name = $row["name"];
+                            $dsc = $row["description"];
+                            echo "<div class='style_item' style='color: ".$hex3."; background-color: ".$hex2."; border: 3px solid ".$hex1.";'><br/><h3>".$name."</h3> ".$dsc." <button onclick='changeStyle(".$sid.")' class='choose-bt'>Wybierz</button></div> ";
                 }
-                echo "<br/><hr/><br/><a href='logout.php'>Wyloguj</a>";
+                echo "<div style='clear: both;'></div> <br/><hr/><br/><a href='logout.php'>Wyloguj</a>";
                 }
                 $conn->close();
             }

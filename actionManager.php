@@ -37,7 +37,6 @@ sendReturn("Nie wprowadzono wymaganych danych");
             $_SESSION['zalogowany'] = TRUE;
 	    	$_SESSION['name'] = $login;
 	    	$_SESSION['id'] = $userId;
-            session_write_close();
             sendReturn("Wprowadzone dane są poprawne. Zaraz nastąpi przekierowanie!", 0);
            } else {
             sendReturn("Wprowadzone dane są nieprawidłowe. Logowanie nie udane.");
@@ -87,6 +86,13 @@ if (empty($_GET['A01']) || empty($_GET['A02'])) {
     } else {
         sendReturn("Wystąpił nieoczekiwany błąd podczas rejestracji.");
     }
+}
+
+if (!isset($_SESSION["zalogowany"])) {
+    sendReturn("Musisz być zalogowany aby to wykonać!");
+}
+if ($_SESSION["zalogowany"] == false) {
+    sendReturn("Musisz być zalogowany aby to wykonać!");
 }
 
 
@@ -139,12 +145,39 @@ if ($action == 3) {
 }
 
 if ($action == 4) { 
+    $stmt_count = $conn->prepare("SELECT COUNT(*) as count FROM tabs WHERE id_u = ?");
+    $stmt_count->bind_param("i", $_SESSION['id']);
+    $stmt_count->execute();
+    $result = $stmt_count->get_result();
+    $row = $result->fetch_assoc();
+    $existing_tabs_count = $row['count'];
+    if ($existing_tabs_count >= 10) {
+        sendReturn("Osiągnąłeś limit (10 zakładek), usuń jakąś aby dodać kolejną!", 2);
+     }
     $default = '{"name": "Nowy Tab", "type": 1, "daty": [{"text": "przykladowy box", "data": "1 STY 2024"}]}';
     $sql = "INSERT INTO tabs(id_u, dane) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $_SESSION['id'], $default);
     if ($stmt->execute()) {
         sendReturn("Dodano!");
+    } else {
+        sendReturn("Nieoczekiwany Błąd");
+    }
+}
+
+if ($action == 5) { 
+    $sql = "UPDATE users SET id_st = ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    if (!isset($_GET['A01'])) {
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    if (empty($_GET['A01'])) {  
+        sendReturn("Nie wprowadzono wymaganych danych");
+    }
+    $sid = $_GET['A01'];
+    $stmt->bind_param("ii", $sid ,$_SESSION['id'] );
+    if ($stmt->execute()) {
+        sendReturn("Zmieniono styl!");
     } else {
         sendReturn("Nieoczekiwany Błąd");
     }

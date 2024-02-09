@@ -379,12 +379,29 @@ function addTab() {
         let parser = new DOMParser();
         data = parser.parseFromString(data, "text/html");
         showInformation(data.body.innerHTML);
-        location.reload();
+        let js = responseJSON.js;
+        if (js != 2) {
+          location.reload();
+        }
     } else {
      showInformation('<span class="error">Błąd połączenia.</span>');
     }
     }
   };
   xhr.open("GET", "actionManager.php?action=4", true);
+  xhr.send();
+}
+function changeStyle(id) {
+  var xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+        location.reload();
+    } else {
+     showInformation('<span class="error">Błąd połączenia.</span>');
+    }
+    }
+  };
+  xhr.open("GET", "actionManager.php?action=5&A01=" + id, true);
   xhr.send();
 }

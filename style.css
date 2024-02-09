@@ -340,3 +340,30 @@ button:disabled {
     border-color: rgba(0, 0, 0, 0);
     border-style: inset;
 }
+
+.style_item {
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    border-radius: 15px;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+}
+
+.choose-bt {
+    padding: 5px;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: var(--kubaVP3);
+    background-color: var(--kubaVP2);
+    border: 2px solid var(--kubaVP3L15);
+    border-radius: 5px;
+}
+
+.choose-bt:hover {
+    color: var(--kubaVP3L30);
+    background-color: var(--kubaVP2L30);
+    border: 2px solid var(--kubaVP3L45);
+}

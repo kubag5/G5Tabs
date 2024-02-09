@@ -1,6 +1,7 @@
 # G5Tabs
 * [do czego służy aplikacja?](#do-czego-służy-aplikacja)
 * [jak będą działać zakładki?](#jak-będą-działać-zakładki)
+* [style](#style)
 * [kategorie zakładek](#kategorie-zakładek)
 * [Dziennik zmian](#dziennik-zmian)
 
@@ -11,6 +12,9 @@ Aplikacja będzie umożliwiać tworzenie użytkownikowi własnych zakładek.
 zakładki będą podstronami strony które będą zawierały różne informacje w zależności od typu zakładki. czyli zakładki to będą strony informacyjne utworzone przez użytkowników.
 
 użytkownik będzie mógł wybrać czy zakładka ma być publiczna czy prywatna.
+
+## style
+Styl to kolory strony. Użytkownicy mogą odblokowywać style którę moga sobie następnie ustawić.
 
 ## Kategorie zakładek: 
 <details>
@@ -25,6 +29,10 @@ użytkownik w planie może dodawać jakie ma plany na przyszłość. strona będ
 nowe kategorie zakładek będą wymyślane z czasem. 
 
 ## Dziennik zmian
+
+### 0.2.6
++ dodano system styli. 
++ inne mniejsze zmiany
 
 ### 0.2.5.1
 + małe zmiany w kodzie

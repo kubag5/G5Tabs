@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G5Tabs</title>
+    <?php 
+    require("../config.php");
+    $conn = new mysqli($host, $user, $pass, $db);
+    if ($conn->connect_error) {
+        die("Connection failed");
+    }
+    session_start();
+    include "../styleManager.php";
+    session_write_close();
+    ?>
     <link rel="stylesheet" href="tabsStyle.css">
     <script src="tabs.js" defer></script>
 </head>
@@ -39,14 +49,7 @@
                 echo "<h1>Podano błędne ID.</h1></div></div></div></body></html>";
                 exit;
             }                
-            require("../config.php");
-            $conn = new mysqli($host, $user, $pass, $db);
-            if ($conn->connect_error) {
-                die("Connection failed");
-            }
-            session_start();
-            include "../styleManager.php";
-            session_write_close();
+            global $conn;
              $result = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
              if ($result->num_rows > 0) {
                 $dane = $result->fetch_assoc()["dane"];
