@@ -110,6 +110,7 @@
                                 setTimeout(() => {
                                   try {
                                     editMode();
+                                    leaveWarn1 = false;
                                   } catch (error) {
                                     opener();
                                   }
@@ -134,9 +135,9 @@
                     }
                 }
                 echo "</div>";
-                echo "<br/><a onclick='addTab()'>Dodaj zakładkę</a><br/><br/>";
+                echo "<br/><a class='choose-bt' onclick='addTab()'>Dodaj zakładkę</a><br/><br/>";
                 echo "<hr/><h2>Twoje Style:</h2><br/>";
-                echo "<div class='style_item' style='color: #092331; background-color: #12505f; border: 3px solid #092331;'><br/><h3>G5TabsStyle</h3> Domylśny styl :O <button onclick='changeStyle(-1)' class='choose-bt'>Wybierz</button></div> ";
+                echo "<div class='style_list'><div class='style_item' style='color: #092331; background-color: #12505f; border: 3px solid #092331;'><br/><h3>G5TabsStyle</h3> Domylśny styl :O <button onclick='changeStyle(-1)' class='choose-bt btStylePosition'>Wybierz</button></div> ";
                 global $styleList;
                 foreach ($styleList as $row) {
                             $sid = $row["id"];
@@ -145,9 +146,9 @@
                             $hex3 = $row["hex3"];
                             $name = $row["name"];
                             $dsc = $row["description"];
-                            echo "<div class='style_item' style='color: ".$hex3."; background-color: ".$hex2."; border: 3px solid ".$hex1.";'><br/><h3>".$name."</h3> ".$dsc." <button onclick='changeStyle(".$sid.")' class='choose-bt'>Wybierz</button></div> ";
+                            echo "<div class='style_item' style='color: ".$hex3."; background-color: ".$hex2."; border: 3px solid ".$hex1.";'><br/><h3>".$name."</h3> ".$dsc." <button onclick='changeStyle(".$sid.")' class='choose-bt btStylePosition'>Wybierz</button></div> ";
                 }
-                echo "<div style='clear: both;'></div> <br/><hr/><br/><a href='logout.php'>Wyloguj</a>";
+                echo "</div><div style='clear: both;'></div> <br/><hr/><br/><br/><br/><a class='choose-bt' href='logout.php'>Wyloguj</a><br/><br/><br/><br/><br/>";
                 }
                 $conn->close();
             }

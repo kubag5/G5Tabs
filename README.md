@@ -30,6 +30,12 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.7
++ dodanie ostrzeżeń przed usunięciem lub przypadkową utratą danych.
++ zmiany wizualne dla przycisków.
++ lepszy formularz dodawania box'ów w zakładce "Linia czasu"
++ inne mniejsze zmiany
+
 ### 0.2.6
 + dodano system styli. 
 + inne mniejsze zmiany

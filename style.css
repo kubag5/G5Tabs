@@ -346,24 +346,43 @@ button:disabled {
     height: 180px;
     padding: 10px;
     border-radius: 15px;
-    float: left;
-    margin-right: 10px;
+    margin: auto;
+    display: inline-block;
     position: relative;
+    vertical-align: top;
+
+}
+
+.style_list {
+    margin: auto;
+    width: fit-content;
 }
 
 .choose-bt {
     padding: 5px;
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
+    font-size: 16px;
     color: var(--kubaVP3);
     background-color: var(--kubaVP2);
     border: 2px solid var(--kubaVP3L15);
     border-radius: 5px;
 }
 
+.btStylePosition {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+}
+
 .choose-bt:hover {
+    cursor: pointer;
     color: var(--kubaVP3L30);
     background-color: var(--kubaVP2L30);
     border: 2px solid var(--kubaVP3L45);
+}
+
+hr {
+    color: var(--kubaVP2);
+    min-width: 250px;
+    max-width: 50%;
+    margin: auto;
 }

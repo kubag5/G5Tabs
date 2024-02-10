@@ -255,6 +255,7 @@ function doJs(js) {
 
 let edit = false;
 function editMode() {
+  leaveWarn1 = true;
   document.getElementById("content").innerHTML = "wczytywanie...";
   if (typeof json !== 'undefined') {
     edit = true;
@@ -279,36 +280,33 @@ function editMode() {
     cn += "<br/><hr/><br/> <h2>Dodaj: </h2>";
     cn += `
     <form onsubmit="handleSubmitEditAdd(event)" class="otherFrom">
-    <label for="dzien">Dzień:</label>
-    <input type="number" id="dzien" name="dzien" min="1" max="31" class='LRGI' required><br/><br/>
-    <label for="miesiac">Miesiąc:</label>
-    <input type="number" id="miesiac" name="miesiac" min="1" max="12" class='LRGI' required><br/><br/>
-    <label for="rok">Rok:</label>
-    <input type="number" id="rok" name="rok" class='LRGI' required><br/><br/>
+    <label for="date">Data:</label>
+    <input type="date" name="date" class='LRGI' required><br/><br/>
     <label for="tekst">Tekst:</label>
     <input type="text" id="tekst" name="tekst" class='LRGI' maxlength='300' required> 
     <br/><br/><br/>
     <button type="submit" class='LRGBI'>Dodaj</button>
     </form>
     `
-    cn += "<br/><hr/><br/> <h2>Opcje: </h2>";
-    cn += "<br/><a onclick='saveJson()'> Zapisz </a><br/><br/>"
-    cn += "<br/><a onclick='deleteTab()'> Usuń cały TAB</a><br/><br/><br/>"
-
-
+    cn += "<br/><hr/><br/> <h2>Opcje: </h2><br/>";
+    cn += "<button class='choose-bt' onclick='saveJson()'> Zapisz </button><br/><br/>";
+    cn += "<a class='choose-bt' href='tabs/?id="+projectID+"'>Zobacz</a><br/><br/>";
+    cn += "<button class='choose-bt' onclick='deleteTab()'> Usuń cały TAB</button><br/><br/><br/>";
 
     document.getElementById("content").innerHTML = cn;
   }
 }
 
 function deleteBox(index) {
+  if (!confirm("Czy aby napewno chcesz usunąć box'a?")) return;
   if (index >= 0 && index < json.daty.length) {
     json.daty.splice(index, 1);
     editMode();
   }
 }
-
+let leaveWarn1 = false;
 function saveJson() {
+  leaveWarn1 = false;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -339,9 +337,8 @@ function parseDate(dateString) {
 
 function handleSubmitEditAdd(event) {
   event.preventDefault();
-  const dzien = event.target.elements['dzien'].value;
-  const miesiac = event.target.elements['miesiac'].value;
-  const rok = event.target.elements['rok'].value;
+  const date = event.target.elements['date'].value;
+  const [rok, miesiac, dzien] = date.split('-').map(Number);
   const tekst = event.target.elements['tekst'].value;
   const data = dzien + " " + months[miesiac-1] + " " + rok;
   const newDate = { text: tekst, data: data };
@@ -350,6 +347,7 @@ function handleSubmitEditAdd(event) {
 }
 
 function deleteTab() {
+  if (!confirm("Czy aby napewno chcesz usunąć całego TABA?")) return;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -404,4 +402,10 @@ function changeStyle(id) {
   };
   xhr.open("GET", "actionManager.php?action=5&A01=" + id, true);
   xhr.send();
+}
+
+window.onbeforeunload = function () { 
+  if(leaveWarn1) {
+    return "Dokonałes niezapisanych zmian. Czy chcesz anulować?"
+  }
 }
