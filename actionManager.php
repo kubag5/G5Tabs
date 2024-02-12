@@ -154,7 +154,7 @@ if ($action == 4) {
     if ($existing_tabs_count >= 10) {
         sendReturn("Osiągnąłeś limit (10 zakładek), usuń jakąś aby dodać kolejną!", 2);
      }
-    $default = '{"name": "Nowy Tab", "type": 1, "daty": [{"text": "przykladowy box", "data": "1 STY 2024"}]}';
+    $default = '{"name": "Nowy Tab", "public": false, "type": 1, "daty": [{"text": "przykladowy box", "data": "1 STY 2024"}]}';
     $sql = "INSERT INTO tabs(id_u, dane) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $_SESSION['id'], $default);
@@ -191,7 +191,7 @@ function verifyJSON($jsonData) {
         if (!is_array($data)) {
             throw new Exception("Nie udało się zdekodować danych JSON");
         }
-        $usefulKeys = ["type", "name", "daty"];
+        $usefulKeys = ["type", "name", "daty", "public"];
         $unusedKeys = array_diff(array_keys($data), $usefulKeys);
         foreach ($unusedKeys as $key) {
             unset($data[$key]);
@@ -202,6 +202,26 @@ function verifyJSON($jsonData) {
                 $entry = array_intersect_key($entry, array_flip($validKeys));
              }
         }
+
+        if (!isset($data['public'], $data['type'], $data['name'])) {
+            sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+        }
+
+        if (!is_numeric($data['type'])) {
+            sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+        }
+        if ((int)$data['type'] < 0 || (int)$data['type'] > 999) {
+            sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+        }
+
+        if (strlen($data['name']) > 75 && strlen($data['name']) < 2) {
+            sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+        }
+
+        if (!is_bool($data['public'])) { 
+             sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+        } 
+
         $updatedJsonData = json_encode($data, JSON_PRETTY_PRINT);
         return $updatedJsonData;
     } catch (Exception $e) {

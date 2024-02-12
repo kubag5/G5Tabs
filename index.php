@@ -89,8 +89,6 @@
                 
             }
 
-            
-
             function logged() { 
                 global $conn;
                 if (isset($_GET['edit'])) {
@@ -153,7 +151,7 @@
                 $conn->close();
             }
             function createProjectDiv($name, $id) {
-                return " <div class='project'>".$name." | ID: ".$id." | <a href='tabs/?id=".$id."'>Zobacz</a> | <a href='?edit=".$id."'>Edytuj</a></div>";
+                return " <div class='project'>".htmlspecialchars($name)." | ID: ".$id." | <a href='tabs/?id=".$id."'>Zobacz</a> | <a href='?edit=".$id."'>Edytuj</a></div>";
             }
 
             check();

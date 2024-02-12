@@ -254,13 +254,17 @@ function doJs(js) {
 
 
 let edit = false;
+let lastEditMode = 0;
 function editMode() {
   leaveWarn1 = true;
   document.getElementById("content").innerHTML = "wczytywanie...";
   if (typeof json !== 'undefined') {
     edit = true;
     let cn = "";
-    cn += "<h1>Edytujesz: "+json.name+" </h1>"
+    cn += "<h1>Edytujesz: "+htmlspecialchars(json.name)+" </h1>";
+    let pbstr = "prywatny";
+    if (json.public) pbstr = "publiczny"; 
+    cn += "<h3>Projekt jest: "+ pbstr+" </h3>"
     if (typeof json.daty !== 'undefined') { 
       json.daty.sort((a, b) => {
         const dateA = parseDate(a.data);
@@ -270,14 +274,16 @@ function editMode() {
       let i = 0;
       json.daty.forEach(element => {
         if (typeof element.data !== 'undefined' || typeof element.text !== 'undefined') { 
-          cn +=  "<div class='tabs1editmode'> TEXT: "+ element.text + " DATA: "+ element.data +" | <a onclick='deleteBox("+i+")'>USUŃ</a> </div>";
+          cn +=  "<div class='tabs1editmode'> TEXT: "+ htmlspecialchars(element.text) + " DATA: "+ htmlspecialchars(element.data) +" | <a onclick='deleteBox("+i+")'>USUŃ</a> </div>";
         } else {
           deleteBox(i);
         }
         i++;
       });
     }
-    cn += "<br/><hr/><br/> <h2>Dodaj: </h2>";
+    cn += "<br/><hr/><br/>";
+    cn += "<div class='editOptionDiv' id='editAdd'>"
+    cn += "<h2>Dodaj: </h2>";
     cn += `
     <form onsubmit="handleSubmitEditAdd(event)" class="otherFrom">
     <label for="date">Data:</label>
@@ -288,12 +294,30 @@ function editMode() {
     <button type="submit" class='LRGBI'>Dodaj</button>
     </form>
     `
+    cn += "</div>"
+
+    cn += "<div class='editOptionDiv' id='editChangeName'>"
+    cn += "<h2>Zmień nazwe taba: </h2>";
+    cn += `
+    <form onsubmit="changeNameEvent(event)" class="otherFrom">
+    <label for="nazwa">Nowa Nazwa:</label>
+    <input type="text" name="nazwa" class='LRGI' maxlength='75' minlength='2' required> 
+    <br/><br/><br/>
+    <button type="submit" class='LRGBI'>Zmień</button>
+    </form>
+    `
+    cn += "</div>"
+
     cn += "<br/><hr/><br/> <h2>Opcje: </h2><br/>";
+    cn += "<button class='choose-bt' onclick='startEditAction(0)'> Dodaj Box'a </button><br/><br/>";
+    cn += "<button class='choose-bt' onclick='startEditAction(1)'> Zmień Nazwę Tab'a </button><br/><br/>";
+    cn += "<button class='choose-bt' onclick='changePublic()'> Zmień publiczność </button><br/><br/>";
     cn += "<button class='choose-bt' onclick='saveJson()'> Zapisz </button><br/><br/>";
     cn += "<a class='choose-bt' href='tabs/?id="+projectID+"'>Zobacz</a><br/><br/>";
     cn += "<button class='choose-bt' onclick='deleteTab()'> Usuń cały TAB</button><br/><br/><br/>";
 
     document.getElementById("content").innerHTML = cn;
+    startEditAction(lastEditMode);
   }
 }
 
@@ -304,6 +328,27 @@ function deleteBox(index) {
     editMode();
   }
 }
+
+function changePublic() {
+  if (!confirm("Czy chcesz zmienić publiczność tego taba?")) return;
+  json.public = !json.public;  
+  editMode();
+}
+
+function htmlspecialchars(str) {
+  return str.replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+}
+
+function changeNameEvent(event) {
+  event.preventDefault();
+  json.name = event.target.elements['nazwa'].value;
+  editMode();
+}
+
 let leaveWarn1 = false;
 function saveJson() {
   leaveWarn1 = false;
@@ -334,6 +379,21 @@ function parseDate(dateString) {
   return new Date(year, month, day);
 }
 
+function startEditAction(i) {
+var elements = document.getElementsByClassName('editOptionDiv');
+Array.prototype.forEach.call(elements, function(element) {
+    element.style.display = 'none'; 
+});
+lastEditMode = i;
+  if (i == 0) {
+    document.getElementById("editAdd").style.display = "block";
+  } 
+  if (i == 1) {
+    document.getElementById("editChangeName").style.display = "block";
+  }
+
+}
+
 
 function handleSubmitEditAdd(event) {
   event.preventDefault();
@@ -348,6 +408,7 @@ function handleSubmitEditAdd(event) {
 
 function deleteTab() {
   if (!confirm("Czy aby napewno chcesz usunąć całego TABA?")) return;
+  if (!confirm("Utracisz wszystkie dane z tego TAB'a! Prosimy o zatwierdzenie ponownie!")) return;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {

@@ -30,6 +30,11 @@ nowe kategorie zakładek będą wymyślane z czasem.
 
 ## Dziennik zmian
 
+### 0.2.8
++ Poprawa bezpieczeństwa aplikacji
++ Dodanie opcji zmieniania nazwy zakładki
++ Możliwość zmieniania "publiczności" zakładki
+
 ### 0.2.7
 + dodanie ostrzeżeń przed usunięciem lub przypadkową utratą danych.
 + zmiany wizualne dla przycisków.

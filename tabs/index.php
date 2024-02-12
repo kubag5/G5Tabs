@@ -12,6 +12,27 @@
     }
     session_start();
     include "../styleManager.php";
+    $privSet = false;
+    if (!isset($_GET['id'])) {
+        echo "<h1>Nie podano ID.</h1>";
+        exit;
+    }
+    if (empty($_GET['id'])) {
+        echo "<h1>Nie podano ID.</h1>";
+        exit;
+    }
+    $id = $_GET['id'];
+    if (!is_numeric($id)) {
+        echo "<h1>Podano błędne ID.</h1>";
+        exit;
+    }
+    if (isset($_SESSION["zalogowany"]) && $_SESSION["zalogowany"] == true) {
+        $sql = "SELECT id FROM tabs WHERE id_u = ".$_SESSION['id']." AND id = ".$id;
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            $privSet = true;
+        }
+    }
     session_write_close();
     ?>
     <link rel="stylesheet" href="tabsStyle.css">
@@ -35,28 +56,26 @@
          <div id="content">   
          <div id="tabs1">
             <?php
-            if (!isset($_GET['id'])) {
-                echo "<h1>Nie podano ID.</h1></div></div></div></body></html>";
-                exit;
-            }
-            if (empty($_GET['id'])) {
-                echo "<h1>Nie podano ID.</h1></div></div></div></body></html>";
-                exit;
-            }
-
-            $id = $_GET['id'];
-            if (!is_numeric($id)) {
-                echo "<h1>Podano błędne ID.</h1></div></div></div></body></html>";
-                exit;
-            }                
+            global $id;        
             global $conn;
+            global $privSet;
              $result = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
              if ($result->num_rows > 0) {
                 $dane = $result->fetch_assoc()["dane"];
                 $json = json_decode($dane, true);
-                $lista = $json["daty"];
-                foreach($lista as $tab) {
-                    echo getTab1Element(htmlspecialchars($tab['text']), htmlspecialchars($tab['data']));
+                $verfication = true;
+                if (!isset($json["public"]) && !$privSet) {
+                    $verfication = false;
+                    echo getTab1Element("Ten tab nie ma poprawnie skonfigurowanej publiczności", "---");
+                } else if (!$json["public"] && !$privSet) {
+                    $verfication = false;
+                    echo getTab1Element("Ten tab jest prywatny", "---");
+                }
+                if ($verfication) {
+                    $lista = $json["daty"];
+                    foreach($lista as $tab) {
+                        echo getTab1Element(htmlspecialchars($tab['text']), htmlspecialchars($tab['data']));
+                    }
                 }
             } else {
                 echo getTab1Element("Ten Tab nie istnieje", "---");
