@@ -110,8 +110,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `id_st`) VALUES
-(1, 'test', '$2y$10$KD.9g0w4ocZTGdZhuDMu6eb7Yo6sJrrM6TWX8shCWQYpXb5sdOJli', 0),
-(2, 'kubag5', '$2y$10$EU1S04IOHKSgQnvioUpSnu.CUabeF8NR8O7LIkeyMZ5N3FuklfAJ6', 2);
+(1, 'test', '$2y$10$KD.9g0w4ocZTGdZhuDMu6eb7Yo6sJrrM6TWX8shCWQYpXb5sdOJli', 0);
 
 --
 -- Indeksy dla zrzutów tabel

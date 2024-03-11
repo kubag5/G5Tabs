@@ -351,7 +351,6 @@ function changeNameEvent(event) {
 
 let leaveWarn1 = false;
 function saveJson() {
-  leaveWarn1 = false;
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4) {
@@ -361,6 +360,7 @@ function saveJson() {
         let parser = new DOMParser();
         data = parser.parseFromString(data, "text/html");
         showInformation(data.body.innerHTML);
+        leaveWarn1 = false;
     } else {
      showInformation('<span class="error">Błąd połączenia.</span>');
     }

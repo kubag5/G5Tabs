@@ -200,6 +200,12 @@ function verifyJSON($jsonData) {
             foreach ($data['daty'] as &$entry) {
                 $validKeys = ["data", "text"];
                 $entry = array_intersect_key($entry, array_flip($validKeys));
+                if (!isset($entry['data'], $entry['text'])) {
+                    sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+                }
+                if (strlen($entry['data']) > 75 || strlen($entry['text']) > 300) {
+                    sendReturn("Nie udało się zweryfikować JSON wysłanego przez twój komputer, Tab nie został zapisany!");
+                }
              }
         }
 

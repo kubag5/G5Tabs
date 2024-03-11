@@ -58,8 +58,8 @@ a:hover {
     top: 100%;
     left: 40%;
     width: 130%;
-    height: 3px; /* Rozmiar paska */
-    background-color: var(--kubaVP3L30); /* Kolor paska */
+    height: 3px; 
+    background-color: var(--kubaVP3L30); 
     transform: translateX(-50%) scaleX(0);
     transform-origin: left;
     transition: transform 0.3s ease;
@@ -169,7 +169,6 @@ a:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 7vh;
     border: 2px solid var(--kubaVP3);
     box-sizing: content-box;
     background-color: var(--kubaVP2);

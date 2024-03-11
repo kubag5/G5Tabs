@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>G5Tabs</title>
     <?php 
     require("../config.php");
     $conn = new mysqli($host, $user, $pass, $db);
@@ -34,6 +33,27 @@
         }
     }
     session_write_close();
+    $tab = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
+    $verfication = true;
+    if ($tab->num_rows > 0) {
+        $dane = $tab->fetch_assoc()["dane"];
+        $json = json_decode($dane, true);
+        if (!isset($json["public"]) && !$privSet) {
+            $verfication = false;
+            echo getTab1Element("Ten tab nie ma poprawnie skonfigurowanej publiczności", "---");
+        } else if (!$json["public"] && !$privSet) {
+            $verfication = false;
+            echo getTab1Element("Ten tab jest prywatny", "---");
+        }
+        if ($verfication) {
+            echo "<title>".$json["name"]." - G5Tab</title>";
+        } else {
+            echo "<title>Prywatny Tab - G5Tab</title>";
+        }
+    } else {
+        echo "<title>G5Tab</title>";
+    }
+    
     ?>
     <link rel="stylesheet" href="tabsStyle.css">
     <script src="tabs.js" defer></script>
@@ -54,32 +74,34 @@
          </div>
          </div>
          <div id="content">   
-         <div id="tabs1">
             <?php
             global $id;        
             global $conn;
             global $privSet;
-             $result = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
-             if ($result->num_rows > 0) {
-                $dane = $result->fetch_assoc()["dane"];
+            global $verfication;
+            $tab = $conn->query("SELECT dane FROM tabs WHERE id = ".$id);
+             if ($tab->num_rows > 0) {
+                $dane = $tab->fetch_assoc()["dane"];
                 $json = json_decode($dane, true);
-                $verfication = true;
-                if (!isset($json["public"]) && !$privSet) {
-                    $verfication = false;
-                    echo getTab1Element("Ten tab nie ma poprawnie skonfigurowanej publiczności", "---");
-                } else if (!$json["public"] && !$privSet) {
-                    $verfication = false;
-                    echo getTab1Element("Ten tab jest prywatny", "---");
-                }
                 if ($verfication) {
+                    $nazwa = $json["name"];
+                    echo "<h1>".$nazwa."</h1>";
+                    echo '<div id="tabs1">';
                     $lista = $json["daty"];
                     foreach($lista as $tab) {
                         echo getTab1Element(htmlspecialchars($tab['text']), htmlspecialchars($tab['data']));
                     }
+                    echo "</div>";
                 }
             } else {
                 echo getTab1Element("Ten Tab nie istnieje", "---");
             }
+            $result = $conn->query("SELECT users.username AS username FROM tabs, users WHERE tabs.id = ".$id." AND users.id = tabs.id_u");
+            if ($result->num_rows > 0) {
+                $username = $result->fetch_assoc()["username"];
+                echo "<div class='authorInfo'><br/><h2>Stworzone przez: ".$username."</h2></div>";
+            }
+           
             $conn->close();
             function getTab1Element($text, $date) {
                 return '
@@ -89,10 +111,6 @@
                 </div>';
             }
             ?>
-            </div>
-            <div class="authorInfo"><br/>
-                <!-- <h2>Stworzone przez: xxx</h2> -->
-            </div>
          </div>
 </div>
 </body>
